@@ -43,8 +43,6 @@ function App() {
   }
   return (
     <>
-    <button onClick={ handleClick }>Apretame</button>
-      <h1>Hola</h1>
       <div className="flashcards">
         { questions.map(question => <Flashcard question={question} key={question.id} actualCard={selectedId} setSelected={handleClick}/>) }
       </div>
