@@ -1,9 +1,9 @@
 
-const Item = ({item}) =>{
+const Item = ({item, onRemoveItem}) =>{
     return(
        <li>
             <span style={item.packed ? {textDecoration : "line-through"} : {}}>{`${item.description}: ${item.quantity}`}</span>
-            <button>❎</button>
+            <button onClick={e => onRemoveItem(item)}>❎</button>
         </li>
     )
 }

@@ -2,6 +2,9 @@
 const Flashcard = ({ question, actualCardId, setSelected }) =>{
     const handleClick = (e,id) => {
         setSelected(id !== actualCardId ? id : null)
+
+        if (id !== actualCardId) return setSelected(id)
+        return setSelected(null)
     }
     return(
 

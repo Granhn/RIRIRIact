@@ -1,14 +1,19 @@
 import { useState } from "react"
 import Item from './Item'
-const Form = () =>{
+const Form = ({ onAddItems }) =>{
     const [description, setDescription] = useState('')
-    const [ quantity, setQuantity ] = useState(1)  
+    const [ quantity, setQuantity ] = useState(1)
+    const handleAddItems = (item) => {
+        onAddItems(item)
+    }
     const handleSubmit = (e) => {
         e.preventDefault()
         if (description === ''){
             return alert("Must have a description")    
         }
         const newItem = { description, quantity, packed: false ,id:Date.now() }
+        console.log(newItem)
+        handleAddItems(newItem)
         setDescription("")
         setQuantity(1);
     }
