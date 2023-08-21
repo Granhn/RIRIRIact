@@ -38,13 +38,13 @@ const questions = [
 
 function App() {
   const [selectedId, setSelectedId] = useState(3457)
-  const handleClick = (e,id) =>{
+  const handleClick = (id) =>{
     setSelectedId(id)
   }
   return (
     <>
       <div className="flashcards">
-        { questions.map(question => <Flashcard question={question} key={question.id} actualCard={selectedId} setSelected={handleClick}/>) }
+        { questions.map(question => <Flashcard question={question} key={question.id} actualCardId={selectedId} setSelected={handleClick}/>) }
       </div>
       
     </>
