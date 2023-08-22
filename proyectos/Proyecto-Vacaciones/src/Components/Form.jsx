@@ -8,9 +8,7 @@ const Form = ({ onAddItems }) =>{
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (description === ''){
-            return alert("Must have a description")    
-        }
+        if (description === '') return alert("Must have a description")    
         const newItem = { description, quantity, packed: false ,id:Date.now() }
         console.log(newItem)
         handleAddItems(newItem)
