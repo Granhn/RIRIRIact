@@ -13,6 +13,9 @@ const App = () =>{
   const handleAddItems = (item) => {
     setItems(items => [...items, item])
   }
+  const handleChangeItem = (id) => {
+    setItems(items => items.map(item => item.id === id ? {...item, packed: !item.packed} : item))
+  }
   const handleRemoveItem = (item) => {
     setItems(items.filter(i => i !== item))
   }
@@ -21,7 +24,7 @@ const App = () =>{
       <Logo />
       <main>
         <Form onAddItems={handleAddItems}/>
-        <PackingList items={items} onRemoveItem={handleRemoveItem}/>
+        <PackingList items={items} onRemoveItem={handleRemoveItem} onUpdateItem={handleChangeItem }/>
       </main>
       <Stats />
     </>
