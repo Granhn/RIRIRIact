@@ -30,11 +30,16 @@ function App() {
         </div>
         <p className='message'>Step {step}: { messages[step - 1] }  </p>
         <div className="buttons">
-          <button style={{backgroundColor:"#7950f2", color:"#fff"}} onClick={handlePrevious} >Previous</button>
-          <button style={{backgroundColor:"#7950f2", color:"#fff"}} onClick={handleNext}>Next</button>
+          <Button  textColor="#fff"bgColor="#7950f2" onClickButton={handlePrevious}text="Previous" />
+          <Button  textColor="#fff"bgColor="#7950f2" onClickButton={handleNext} text="Next"/>
         </div>
       </div>}
     </>
+  )
+}
+const Button = ({text, textColor , bgColor, onClickButton}) => {
+  return(
+    <button style={{backgroundColor:{bgColor}, color:{textColor}}} onClick={onClickButton}>{text}</button>
   )
 }
 
