@@ -3,17 +3,42 @@ import FormAddFriend from "./Components/FormAddFriend";
 import Button from "./Components/Button";
 import FormSplitBill from "./Components/FromSplitBill";
 import { useState } from "react";
+
+const initialFriends = [
+  {
+    id: 118836,
+    name: "Clark",
+    image: "https://i.pravatar.cc/48?u=118836",
+    balance: -7,
+  },
+  {
+    id: 933372,
+    name: "Sarah",
+    image: "https://i.pravatar.cc/48?u=933372",
+    balance: 20,
+  },
+  {
+    id: 499476,
+    name: "Anthony",
+    image: "https://i.pravatar.cc/48?u=499476",
+    balance: 0,
+  },
+];
 export default function App(){
+  const [friends, setFriends ] = useState([...initialFriends])
   const [showFormFriend, setShowFormFriend] = useState(false)
+  const [selectedFriend, setSelectedFriend] = useState(null);
   const handleTogleFormFriend = () => setShowFormFriend(showForm => !showForm)
+  const handleSelection = (friend) => setSelectedFriend(friend)
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
-        {showFormFriend && <FormAddFriend toggleForm={() => setShowFormFriend(setShowF => !setShowF)}/>} 
-        <Button clickEvent={handleTogleFormFriend}>{showFormFriend ? "Close" : "Add friend!"}</Button>
+        <FriendsList friends={friends} onSelection={handleSelection}/>
+        {showFormFriend && <FormAddFriend toggleForm={() => setShowFormFriend(setShowF => !setShowF)} addFriend={setFriends}/>} 
+        <Button onClickEvent={handleTogleFormFriend}>{showFormFriend ? "Close" : "Add friend!"}</Button>
       </div>
-      <FormSplitBill></FormSplitBill>
+      {selectedFriend && <FormSplitBill friendIs={selectedFriend} setFriend={handleSelection}/>}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Button from "./Button"
-export default function FormAddFriend({toggleForm}){
+
+export default function FormAddFriend({toggleForm, addFriend}){
     const [friendName, setFriendName] = useState("")
     const [imageUrl, setImageUrl] = useState("")
     const handleSubmit = (e) => {
@@ -8,10 +9,12 @@ export default function FormAddFriend({toggleForm}){
         if(friendName === "" || imageUrl === "") return alert("fill both inputs")
         const newFriend = {
             name:friendName,
-            id: crypto.randomUUID,
+            id: Date.now(),
             image: `https://i.pravatar.cc/48?=${imageUrl}+${friendName}`,
+            balance: 0
         }
         console.log(newFriend)
+        addFriend(friends => [...friends, newFriend])
         setFriendName("")
         setImageUrl("")
         toggleForm()
@@ -23,7 +26,7 @@ export default function FormAddFriend({toggleForm}){
 
             <label htmlFor="imageUrl">Image url</label>
             <input type="text" id="imageUrl"value={imageUrl} onChange={(e)=> setImageUrl(e.target.value)} />
-            <Button >Add</Button>
+            <Button clickEvent={handleSubmit}>Add</Button>
         </form>
     )
 }
