@@ -29,16 +29,23 @@ export default function App(){
   const [showFormFriend, setShowFormFriend] = useState(false)
   const [selectedFriend, setSelectedFriend] = useState(null);
   const handleTogleFormFriend = () => setShowFormFriend(showForm => !showForm)
-  const handleSelection = (friend) => setSelectedFriend(friend)
+  const handleSelection = (friend) => {
+    setSelectedFriend((selected) => selected?.id === friend.id ? null : friend)
+    setShowFormFriend(false)
+  }
+  const handleSplitBill = (currency) => {
+    setFriends(friends => friends.map(friend => friend.id === selectedFriend.id ? {...friend, balance:friend.balance + currency} : friend))
+    setSelectedFriend(null);
+  }
 
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList friends={friends} onSelection={handleSelection}/>
+        <FriendsList friends={friends} onSelection={handleSelection} selectedFriend={selectedFriend}/>
         {showFormFriend && <FormAddFriend toggleForm={() => setShowFormFriend(setShowF => !setShowF)} addFriend={setFriends}/>} 
         <Button onClickEvent={handleTogleFormFriend}>{showFormFriend ? "Close" : "Add friend!"}</Button>
       </div>
-      {selectedFriend && <FormSplitBill friendIs={selectedFriend} setFriend={handleSelection}/>}
+      {selectedFriend && <FormSplitBill friendIs={selectedFriend} setFriend={handleSelection} handleSplitBill={handleSplitBill}/>}
     </div>
   )
 }
