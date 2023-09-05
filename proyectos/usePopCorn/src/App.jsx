@@ -215,7 +215,7 @@ function MovieDetails({selectedId, handdleRemoveMovie}){
     </div>
   )
 }
-function Box({children}){
+function Box({children}){ 
   const [isOpen, setIsOpen] = useState(true);
   return(
     <div className="box">
