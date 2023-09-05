@@ -9,7 +9,7 @@ const starContainerStyle = {
     display:"flex",
 }
 
-export default function StarRating({maxRating = 5, color = "#fcc419", size = '1000px',messages=[] }){
+export default function StarRating({maxRating = 5, color = "#fcc419", size = '48px',messages=[] }){
 
     const textStyle = {
         lineHeight:"1",
@@ -21,7 +21,6 @@ export default function StarRating({maxRating = 5, color = "#fcc419", size = '10
     const [tempRating, setTempRating] = useState(0)
     return(
         <div style={containerStyle}>
-            <h2>Hola</h2>
             <div style={starContainerStyle}>
                 {Array.from({length: maxRating}, (_, i) => <Star key={i} clickEvent={() => setRating(i+1)} full={tempRating? tempRating >= i + 1 : rating>=i+1} onHoverIn={() => setTempRating(i+1)} onHoverOut={()=>setTempRating(0)} color={color}/>)}
             </div>
