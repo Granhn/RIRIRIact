@@ -64,10 +64,12 @@ export default function App() {
   })
   const handleRemoveMovie = (watchedMovie) =>setWatched(watched => watched.filter(movie => movie.imbdID != watchedMovie.imbdID)) 
   useEffect(() => {
+    const controller = new AbortController()
+    const { signal } = controller
     const getMovies = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`)
+        const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,{ signal })
         const data = await res.json();
         setMovies(data.Search)  
         setError("")
@@ -81,8 +83,10 @@ export default function App() {
     }
     if(!query.length) setMovies([])
     getMovies();
-
+    return () => controller.abort()
   },[query])
+  
+  
    return (
     <>
       <Navbar > 
@@ -187,9 +191,18 @@ function MovieDetails({selectedId, handdleRemoveMovie, handleWatchedMovie, watch
   const isWatched = watched.map(movie => movie.imbdID).includes(selectedId)
   const watchedMovieRating = watched.find(movie => movie.imbdID === selectedId)?.userRating
   useEffect(() => {
+    const addKeyDown = (e) => {
+      if (e.code === 'Escape') handdleRemoveMovie()
+    }
+    document.addEventListener("keydown", addKeyDown)
+    return () => document.removeEventListener("keydown",addKeyDown)
+  },[handdleRemoveMovie])
+
+  useEffect(() => {
     document.title = `Movie🍿 | ${movie.Title}`
     return () => document.title = "UsePopCorn!🍿"
   },[movie])
+  
   useEffect(() =>{
     const controller = new AbortController()
     const {signal} = controller
