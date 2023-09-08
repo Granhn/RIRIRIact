@@ -7,11 +7,11 @@ export default function App() {
   const [from, setFrom] = useState("USD")
   const [to, setTo] = useState("EUR")
   const [result, setResult] = useState(0)
+
   useEffect(() => {
-
-
     const controller = new AbortController()
     const { signal } = controller
+
     const fetchInfo = async () => {
       try {
         const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`, { signal })
@@ -21,10 +21,13 @@ export default function App() {
         console.log(error);
       }
     }
+    
     if(from !== to) fetchInfo()
-    else setResult(`Can't convert from ${to} to ${from}`)
+    else setResult(amount)
     return () => controller.abort()
   },[amount, from, to])
+
+
   return (
     <div>
       <input type="number"  value={amount} onChange={(e) => setAmount(e.target.value)}/>
